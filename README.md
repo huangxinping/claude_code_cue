@@ -7,6 +7,8 @@
 
 一个为 Claude Code 用户打造的跨平台音效管理 GUI 应用程序。本项目的灵感来源于 [claude-code-but-zelda](https://github.com/saoudrizwan/claude-code-but-zelda) 项目，旨在为 Claude Code 的各种操作添加生动有趣的音效反馈，让编程体验更加愉悦。
 
+> 【除了这行】所有代码均为Vibe Coding，包括 Github Workflows。
+
 ## 📦 下载
 
 ### 最新版本

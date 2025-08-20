@@ -67,9 +67,12 @@ jobs:
         run: npm run build
       
       - name: Package app
+        timeout-minutes: 20
+        shell: bash
         run: npm run pack
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
@@ -96,6 +99,8 @@ jobs:
       
       - name: Create Release
         uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.event.inputs.version }}
           name: Claude Code Cue ${{ github.event.inputs.version }}
@@ -145,5 +150,3 @@ jobs:
             ./artifacts/claude-code-cue-mac-${{ github.event.inputs.version }}/*.dmg
             ./artifacts/claude-code-cue-win-${{ github.event.inputs.version }}/*.exe
             ./artifacts/claude-code-cue-linux-${{ github.event.inputs.version }}/*.AppImage
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
