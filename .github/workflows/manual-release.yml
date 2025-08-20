@@ -54,9 +54,11 @@ jobs:
           cache: 'npm'
       
       - name: Clean install dependencies
+        shell: bash
         run: |
-          rm -rf node_modules package-lock.json
-          npm install
+          if [ -d "node_modules" ]; then rm -rf node_modules; fi
+          if [ -f "package-lock.json" ]; then rm -f package-lock.json; fi
+          npm install --no-audit --no-fund
       
       - name: Type check
         run: npm run typecheck

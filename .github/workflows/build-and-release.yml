@@ -24,6 +24,7 @@ jobs:
             artifact: '*.AppImage'
     
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
     
     steps:
       # 检出代码
@@ -39,9 +40,11 @@ jobs:
       
       # 清理并安装依赖
       - name: Clean install dependencies
+        shell: bash
         run: |
-          rm -rf node_modules package-lock.json
-          npm install
+          if [ -d "node_modules" ]; then rm -rf node_modules; fi
+          if [ -f "package-lock.json" ]; then rm -f package-lock.json; fi
+          npm install --no-audit --no-fund
       
       # TypeScript 类型检查
       - name: Type check
