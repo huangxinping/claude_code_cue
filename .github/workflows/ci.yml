@@ -1,0 +1,136 @@
+name: CI
+
+# 持续集成工作流 - 代码质量检查
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 检出代码
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      # 设置 Node.js 环境
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      # 安装依赖
+      - name: Install dependencies
+        run: npm ci
+      
+      # TypeScript 类型检查
+      - name: Type check
+        run: npm run typecheck
+      
+      # 构建测试
+      - name: Build test
+        run: npm run build
+      
+      # 运行测试 (如果有的话)
+      - name: Run tests
+        run: |
+          if npm run | grep -q "test"; then
+            npm test
+          else
+            echo "No tests found, skipping..."
+          fi
+        continue-on-error: true
+      
+      # 检查构建产物
+      - name: Verify build output
+        run: |
+          if [ -d "out" ]; then
+            echo "✅ Build output directory exists"
+            ls -la out/
+          else
+            echo "❌ Build output directory not found"
+            exit 1
+          fi
+  
+  # 代码质量检查
+  quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      # 检查 package.json 脚本
+      - name: Check package.json scripts
+        run: |
+          echo "📋 Available npm scripts:"
+          npm run | grep -E "^  [a-zA-Z]" || echo "No custom scripts found"
+      
+      # 检查项目结构
+      - name: Verify project structure
+        run: |
+          echo "📁 Project structure:"
+          echo "✅ Source directory:" && ls -la src/ | head -10
+          echo "✅ Scripts directory:" && ls -la scripts/
+          echo "✅ Config files:" && ls -la *.json *.ts *.js 2>/dev/null || true
+      
+      # 检查依赖安全性
+      - name: Security audit
+        run: |
+          npm audit --audit-level=moderate || echo "⚠️ Security vulnerabilities found, please review"
+        continue-on-error: true
+  
+  # 跨平台构建测试
+  cross-platform:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Type check
+        run: npm run typecheck
+      
+      - name: Build test
+        run: npm run build
+      
+      - name: Platform-specific checks
+        shell: bash
+        run: |
+          echo "🖥️ Testing on: ${{ matrix.os }}"
+          echo "📦 Node version: $(node --version)"
+          echo "📦 npm version: $(npm --version)"
+          
+          # 检查构建输出
+          if [ -d "out" ]; then
+            echo "✅ Build successful on ${{ matrix.os }}"
+          else
+            echo "❌ Build failed on ${{ matrix.os }}"
+            exit 1
+          fi

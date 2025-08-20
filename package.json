@@ -1,0 +1,97 @@
+{
+  "name": "claude-code-cue",
+  "version": "1.0.0",
+  "description": "Claude Code Cue - 跨平台音效提示管理器",
+  "main": "out/main/index.js",
+  "author": "Claude",
+  "license": "MIT",
+  "homepage": "./",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "dev:renderer": "vite --config vite.config.ts",
+    "dev:main": "electron src/main/index.ts",
+    "build": "electron-vite build",
+    "build:renderer": "vite build --config vite.config.ts",
+    "build:main": "tsc -p src/main/tsconfig.json",
+    "preview": "electron-vite preview",
+    "pack": "npm run build && electron-builder",
+    "pack:all": "npm run build && electron-builder --mac --win --linux",
+    "clean": "rimraf dist",
+    "typecheck": "tsc --noEmit",
+    "test:core": "node test-core-logic.js",
+    "test:integration": "node integration-tests.js",
+    "test:electron": "node test-electron-main.js",
+    "test:audio": "node test-audio-playback.js",
+    "test:config": "node test-config-persistence.js",
+    "test:error": "node test-error-handling.js",
+    "test:performance": "node test-performance-memory.js",
+    "test:e2e": "node test-e2e.js",
+    "test:all": "./scripts/test.sh"
+  },
+  "dependencies": {
+    "electron-store": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.9.1",
+    "electron-vite": "^2.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^5.0.10",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.10"
+  },
+  "build": {
+    "appId": "com.claude.code-cue",
+    "productName": "Claude Code Cue",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "src/assets/sounds",
+        "to": "sounds",
+        "filter": ["**/*"]
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  }
+}

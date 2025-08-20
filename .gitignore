@@ -1,0 +1,205 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+dist/
+out/
+build/
+release/
+app/
+packages/
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Electron specific
+*.asar
+*.app
+*.exe
+*.dmg
+*.pkg
+*.deb
+*.rpm
+*.AppImage
+*.snap
+
+# electron-builder
+electron-builder-output/
+
+# IDE and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.sublime-project
+.sublime-workspace
+
+# Testing
+coverage/
+.nyc_output/
+jest-coverage/
+*.lcov
+test-results/
+playwright-report/
+test-results.xml
+
+# Storybook
+storybook-static/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# TypeScript
+*.tsbuildinfo
+*.d.ts.map
+
+# ESLint cache
+.eslintcache
+
+# React
+.react/
+
+# Parcel cache
+.cache
+.parcel-cache
+
+# Vite cache
+.vite/
+node_modules/.vite/
+
+# Vite build artifacts
+.vite-inspect/
+vite.config.*.timestamp-*
+
+# Local configuration
+.env.local
+config.local.json
+settings.local.json
+
+# Development
+.cache/
+.temp/
+.tmp/
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Lock files (keep package-lock.json but ignore others)
+yarn.lock
+pnpm-lock.yaml
+
+# Runtime
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Turbo
+.turbo/
+
+# Vercel
+.vercel/
+
+# Next.js (if used)
+.next/
+
+# SvelteKit (if used)
+.svelte-kit/
+
+# Nuxt.js (if used)
+.nuxt/
+.output/
+
+# Gatsby (if used)
+.cache/
+public/
+
+# Docusaurus (if used)
+.docusaurus/
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Temporary folders
+tmp/
+temp/

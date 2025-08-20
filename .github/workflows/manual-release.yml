@@ -1,0 +1,145 @@
+name: Manual Release
+
+# 手动触发的发布工作流
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '发布版本号 (例如: v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+      prerelease:
+        description: '是否为预发布版本'
+        type: boolean
+        default: false
+      platforms:
+        description: '构建平台'
+        type: choice
+        options:
+          - 'all'
+          - 'macos-only'
+          - 'windows-only'
+          - 'linux-only'
+        default: 'all'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: macos-latest
+            platform: mac
+            artifact: '*.dmg'
+            condition: ${{ github.event.inputs.platforms == 'all' || github.event.inputs.platforms == 'macos-only' }}
+          - os: windows-latest
+            platform: win
+            artifact: '*.exe'
+            condition: ${{ github.event.inputs.platforms == 'all' || github.event.inputs.platforms == 'windows-only' }}
+          - os: ubuntu-latest
+            platform: linux
+            artifact: '*.AppImage'
+            condition: ${{ github.event.inputs.platforms == 'all' || github.event.inputs.platforms == 'linux-only' }}
+    
+    runs-on: ${{ matrix.os }}
+    if: ${{ matrix.condition }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Type check
+        run: npm run typecheck
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Package app
+        run: npm run pack
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+      
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: claude-code-cue-${{ matrix.platform }}-${{ github.event.inputs.version }}
+          path: |
+            release/${{ matrix.artifact }}
+            release/*.yml
+            release/*.yaml
+          retention-days: 30
+  
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./artifacts
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          name: Claude Code Cue ${{ github.event.inputs.version }}
+          body: |
+            ## 🎉 Claude Code Cue ${{ github.event.inputs.version }}
+            
+            > 📝 **手动发布版本** - 通过 GitHub Actions 手动触发构建
+            
+            ### 📦 下载链接
+            
+            选择适合您操作系统的安装包：
+            
+            - 🍎 **macOS**: 下载 `.dmg` 文件
+            - 🪟 **Windows**: 下载 `.exe` 文件  
+            - 🐧 **Linux**: 下载 `.AppImage` 文件
+            
+            ### ✨ 主要功能
+            
+            - 🎵 **音效反馈**: 为 Claude Code 工具调用添加音效
+            - 🎛️ **图形化配置**: 直观的音效配置界面
+            - 🤖 **智能映射**: 自动识别工具类型并播放对应音效
+            - 🌍 **跨平台**: 支持 macOS、Windows 和 Linux
+            - 🎨 **现代 UI**: 基于 React 的现代化界面设计
+            - ⚙️ **灵活配置**: 支持自定义音效和"无音效"选项
+            
+            ### 🚀 快速开始
+            
+            1. **下载**: 选择对应平台的安装包
+            2. **安装**: 双击安装包进行安装
+            3. **配置**: 打开应用，配置您喜欢的音效
+            4. **应用**: 点击"应用配置"按钮
+            5. **享受**: 在 Claude Code 中体验音效反馈
+            
+            ### 🔧 技术栈
+            
+            - **前端**: React + TypeScript + Vite
+            - **后端**: Electron + Node.js
+            - **构建**: electron-builder
+            - **CI/CD**: GitHub Actions
+            
+            ---
+            
+            💡 **提示**: 如果遇到问题，请查看 [项目文档](https://github.com/${{ github.repository }}) 或提交 [Issue](https://github.com/${{ github.repository }}/issues)
+          draft: false
+          prerelease: ${{ github.event.inputs.prerelease }}
+          files: |
+            ./artifacts/claude-code-cue-mac-${{ github.event.inputs.version }}/*.dmg
+            ./artifacts/claude-code-cue-win-${{ github.event.inputs.version }}/*.exe
+            ./artifacts/claude-code-cue-linux-${{ github.event.inputs.version }}/*.AppImage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
