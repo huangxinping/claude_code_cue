@@ -8,9 +8,9 @@
 一个为 Claude Code 用户打造的跨平台音效管理 GUI 应用程序。本项目的灵感来源于 [claude-code-but-zelda](https://github.com/linjiw/claude-code-but-zelda) 项目，旨在为 Claude Code 的各种操作添加生动有趣的音效反馈，让编程体验更加愉悦。
 
 ----
-> 【除了这行】**所有代码均为Vibe Coding，包括 Github Workflows**
-> 【除了这行】**使用 Trae + Claude Code + Sonnet 4，大概Vibe Coding 8小时**
-> 【除了这行】**已通过 GitHub Actions 自动化测试，支持 macOS、Windows、Linux 三平台**
+> 【除了这行】**所有代码均为Vibe Coding，包括 Github Workflows**  
+> 【除了这行】**使用 Trae + Claude Code + Sonnet 4，大概Vibe Coding 8小时**  
+> 【除了这行】**只测试 macOS 平台，其他平台未测试** 
 ----
 
 ## 📦 下载
