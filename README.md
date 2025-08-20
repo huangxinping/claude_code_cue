@@ -5,9 +5,13 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-lightgrey.svg)](#-下载)
 
-一个为 Claude Code 用户打造的跨平台音效管理 GUI 应用程序。本项目的灵感来源于 [claude-code-but-zelda](https://github.com/saoudrizwan/claude-code-but-zelda) 项目，旨在为 Claude Code 的各种操作添加生动有趣的音效反馈，让编程体验更加愉悦。
+一个为 Claude Code 用户打造的跨平台音效管理 GUI 应用程序。本项目的灵感来源于 [claude-code-but-zelda](https://github.com/linjiw/claude-code-but-zelda) 项目，旨在为 Claude Code 的各种操作添加生动有趣的音效反馈，让编程体验更加愉悦。
 
-> 【除了这行】所有代码均为Vibe Coding，包括 Github Workflows。
+----
+> 【除了这行】**所有代码均为Vibe Coding，包括 Github Workflows**
+> 【除了这行】**使用 Trae + Claude Code + Sonnet 4，大概Vibe Coding 8小时**
+> 【除了这行】**已通过 GitHub Actions 自动化测试，支持 macOS、Windows、Linux 三平台**
+----
 
 ## 📦 下载
 
@@ -33,13 +37,21 @@
 
 ## 🎵 项目背景
 
-[claude-code-but-zelda](https://github.com/saoudrizwan/claude-code-but-zelda) 是一个为 Claude Code 添加塞尔达传说音效的项目，它通过 Hook 脚本为不同的工具操作播放相应的音效。虽然功能强大，但配置过程相对复杂，需要手动编辑配置文件和管理音效文件。
+[claude-code-but-zelda](https://github.com/linjiw/claude-code-but-zelda) 是一个为 Claude Code 添加塞尔达传说音效的项目，它通过 Hook 脚本为不同的工具操作播放相应的音效。虽然功能强大，但配置过程相对复杂，需要手动编辑配置文件和管理音效文件。
 
 **Claude Code Cue** 正是为了解决这个痛点而生：
 - 🎯 **简化配置流程**：提供直观的图形界面，无需手动编辑配置文件
 - 🔧 **可视化管理**：音效文件的预览、安装、分类管理一目了然
 - ⚡ **一键应用**：自动生成 Hook 脚本并同步到 Claude Code
 - 🌍 **跨平台支持**：支持 macOS、Windows、Linux 三大平台
+
+## 📸 应用截图
+
+### 🖥️ 主界面
+
+![Claude Code Cue 主界面](docs/images/main-interface.png)
+
+*Claude Code Cue 的主要配置界面，提供直观的音效管理和 Hook 配置功能。界面简洁现代，支持音效预览、工具映射配置和一键应用等核心功能。*
 
 ## ✨ 核心功能
 
@@ -368,7 +380,7 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 🙏 致谢
 
-- 感谢 [claude-code-but-zelda](https://github.com/saoudrizwan/claude-code-but-zelda) 项目提供的灵感和音效映射策略
+- 感谢 [claude-code-but-zelda](https://github.com/linjiw/claude-code-but-zelda) 项目提供的灵感和音效映射策略
 - 感谢所有贡献者和用户的支持
 
 ---
