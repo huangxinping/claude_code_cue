@@ -22,6 +22,12 @@ on:
           - 'linux-only'
         default: 'all'
 
+# 设置工作流权限
+permissions:
+  contents: write
+  actions: read
+  security-events: write
+
 jobs:
   build:
     strategy:
